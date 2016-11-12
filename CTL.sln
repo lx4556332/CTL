@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTL.DAL", "CTL.DAL\CTL.DAL.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTL.BLL", "CTL.BLL\CTL.BLL.csproj", "{6E2E876B-54E8-45BF-BF60-B21B5BF4BC33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CTL.WEB", "CTL.WEB\CTL.WEB.csproj", "{D2DD6FDF-F932-43C4-A4C2-D10F560BD3F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6E2E876B-54E8-45BF-BF60-B21B5BF4BC33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E2E876B-54E8-45BF-BF60-B21B5BF4BC33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E2E876B-54E8-45BF-BF60-B21B5BF4BC33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2DD6FDF-F932-43C4-A4C2-D10F560BD3F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2DD6FDF-F932-43C4-A4C2-D10F560BD3F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2DD6FDF-F932-43C4-A4C2-D10F560BD3F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2DD6FDF-F932-43C4-A4C2-D10F560BD3F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
