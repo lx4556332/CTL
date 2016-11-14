@@ -58,18 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CTLDbContext.cs" />
-    <Compile Include="DbIdentity\Interfaces\IUnitOfWork.cs" />
-    <Compile Include="DbIdentity\Repository\ClientManager.cs" />
-    <Compile Include="DbIdentity\Repository\IdentityUnitOfWork.cs" />
     <Compile Include="Entities\Appointment.cs" />
     <Compile Include="Entities\Cathedra.cs" />
     <Compile Include="Entities\Degree.cs" />
     <Compile Include="Entities\Faculty.cs" />
     <Compile Include="Entities\Flow.cs" />
     <Compile Include="Entities\Group.cs" />
-    <Compile Include="DbIdentity\Entity\ApplicationRole.cs" />
-    <Compile Include="DbIdentity\Entity\ApplicationUser.cs" />
-    <Compile Include="DbIdentity\Entity\ClientProfile.cs" />
     <Compile Include="Entities\OtherType.cs" />
     <Compile Include="Entities\Payment.cs" />
     <Compile Include="Entities\PaymentForYears.cs" />
@@ -85,10 +79,6 @@
     <Compile Include="Entities\TeacherLoadOtherType.cs" />
     <Compile Include="Entities\TypeWork.cs" />
     <Compile Include="Entities\YearsCount.cs" />
-    <Compile Include="DbIdentity\IdentityContext.cs" />
-    <Compile Include="DbIdentity\Identity\ApplicationRoleManager.cs" />
-    <Compile Include="DbIdentity\Identity\ApplicationUserManager.cs" />
-    <Compile Include="DbIdentity\Interfaces\IClientManager.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUoW.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

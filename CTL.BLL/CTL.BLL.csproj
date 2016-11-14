@@ -58,13 +58,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Identity\DTO\UserDTO.cs" />
-    <Compile Include="Identity\Infrastructure\OperationDetails.cs" />
-    <Compile Include="Identity\Interfaces\IServiceCreator.cs" />
-    <Compile Include="Identity\Interfaces\IUserService.cs" />
-    <Compile Include="Identity\Services\ServiceCreator.cs" />
-    <Compile Include="Identity\Services\UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
