@@ -1,0 +1,51 @@
+﻿@model CTL.WEB.Areas.Admin.Models.CreateCathedraViewModel
+
+@{
+    ViewBag.Title = "Кафедра";
+}
+
+<h2>@ViewBag.Title</h2>
+<h4>Редагувати дані про кафедру</h4>
+<hr />
+@Html.ActionLink("Повернутися", "Index", new { area = "Admin", controller = "InputDataCathedra" }, new { @class = "btn btn-default", role = "button" })
+<hr />
+
+@using (Html.BeginForm("EditCathedra", "InputDataCathedra", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    @Html.Hidden("Cathedra.Id", Model.Cathedra.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Cathedra.Name, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Cathedra.Name, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Cathedra.FullName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Cathedra.FullName, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Cathedra.FacultyName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.Cathedra.FacultyId, Model.FacultyListItem, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Редагувати" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

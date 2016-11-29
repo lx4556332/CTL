@@ -1,0 +1,35 @@
+﻿@model CTL.WEB.Models.AddRoleUser
+@{
+    ViewBag.Title = "Додати роль";
+}
+
+<h2>Додати роль</h2>
+<h4>Додайте роль до вибраного облікового запису</h4>
+<hr />
+@Html.ActionLink("Повернутися", "Edit", new { Model.Id }, new { @class = "btn btn-default", role = "button" })
+<hr />
+@using (Html.BeginForm("AddRole", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("Id", Model.Id)
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Role, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Role, new { @class = "form-control", placeholder = "\"admin\" or \"user\"" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Додати" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
