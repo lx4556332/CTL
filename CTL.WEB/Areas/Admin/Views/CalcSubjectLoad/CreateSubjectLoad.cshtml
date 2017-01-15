@@ -1,0 +1,407 @@
+﻿@model CTL.WEB.Areas.Admin.Models.SubjectDataViewModel
+@{
+    ViewBag.Title = "Дисципліна";
+}
+
+<h2>@ViewBag.Title</h2>
+<h4>Розрахунок навантаження на дисципліну</h4>
+<hr />
+@Html.ActionLink("Повернутися", "Index", new { area = "Admin", controller = "CalcSubjectLoad" }, new { @class = "btn btn-default", role = "button" })
+<hr />
+
+<div ng-app="createSubjectLoad">
+    <div ng-controller="subjectLoadCtrl">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-horizontal">
+                            <div class="col-md-3 col-sm-5 col-xs-9">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Дисципліна</label>
+                                    <input type="text" class="form-control" placeholder="Назва дисципліни" ng-model="subjectData.Name">
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-3">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Семестр</label>
+                                    <input type="number" class="form-control" placeholder="Семестр" ng-model="subjectData.Semestr">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Введення годин для розрахунку</div>
+                    <div class="panel-body">
+                        <button class="btn btn-xs btn-default" ng-click="clearCalc()">Очистити</button>
+                        <button class="btn btn-xs btn-primary" ng-click="httpCalculateSubjectLoad(hoursToCalculate)">Розрахувати</button>
+                        <button class="btn btn-xs btn-success" ng-click="httpPostSaveSubjectLoad(subjectData)">Зберегти</button>
+                        <hr />
+                        <form class="form-horizontal">
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Обсяг годин</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.AmountHours">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Лекції</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.Lection">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Пр. заняття</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.Practice">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Лаб. заняття</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.Lab">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Екзамени</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.Exam">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Заліки</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.Credit">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Контр. роб.</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.Test">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Курс. проект</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.CourseProject">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Курс. роб.</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.CourseWork">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">РГР, РР, ГР</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.Rgr">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">ДКР</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.Dkr">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Реферати</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.Summery">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-md-offset-2 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Груп Б.</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.AcademB">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Груп К.</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.AcademK">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Підгр. ПЗ Б.</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.SubGroupPractB">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Підгр. ПЗ К.</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.SubGroupPractK">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Підгр. Л. Б.</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.SubGroupLabB">
+                                </div>
+                            </div>                         
+                            <div class="col-md-1 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Підгр. Л. К.</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.SubGroupLabK">
+                                </div>
+                            </div>
+
+                            <div class="col-md-1 col-sm-2 col-xs-3">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Бюджет</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="hoursToCalculate.StudCountB">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-3">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Контракт</label>
+                                    <input type="number" class="form-control" placeholder="0"ng-model="hoursToCalculate.StudCountK">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading">Бюджет</div>
+                    <div class="panel-body">
+                        <button class="btn btn-xs btn-default" ng-click="clearSubjectInfoB()">Очистити</button>
+                        <hr />
+                        <form class="form-horizontal">
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Лекції</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.LectionB">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Пр. заняття</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.PracticeB">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Лаб. заняття</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.LabB">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Екзамени</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.ExamB">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Заліки</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.CreditB">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Контр. роб.</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.TestB">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Курс. проект</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.CourseProjectB">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Курс. роб.</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.CourseWorkB">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">РГР, РР, ГР</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.RgrB">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">ДКР</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.DkrB">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Реферати</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.SummeryB">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Консультації</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.ConsultationB">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Всього</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.TotalHoursB">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading">Контракт</div>
+                    <div class="panel-body">
+                        <button class="btn btn-xs btn-default" ng-click="clearSubjectInfoK()">Очистити</button>
+                        <hr />
+                        <form class="form-horizontal">
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Лекції</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.LectionK">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Пр. заняття</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.PracticeK">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Лаб. заняття</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.LabK">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Екзамени</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.ExamK">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Заліки</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.CreditK">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Контр. роб.</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.TestK">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Курс. проект</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.CourseProjectK">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Курс. роб.</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.CourseWorkK">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">РГР, РР, ГР</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.RgrK">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">ДКР</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.DkrK">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Реферати</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.SummeryK">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Консультації</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.ConsultationK">
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-2 col-xs-4">
+                                <div class="form-group form-group-sm">
+                                    <label class="control-label">Всього</label>
+                                    <input type="number" class="form-control" placeholder="0" ng-model="subjectData.TotalHoursK">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="panel panel-info">
+                    <div class="panel-heading">Потік</div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Назва</th>
+                                    <th>Бюджет</th>
+                                    <th>Контракт</th>
+                                    <th>Підгруп Б.</th>
+                                    <th>Підгруп К.</th>
+                                    <th>Тип навч.</th>
+                                    <th>Форма навч.</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in flowList" ng-click="getCurrentFlow(item)">
+                                <td>{{item.Id}}</td>
+                                <td>{{item.Name}}</td>
+                                <td>{{item.AllCountBudget}}</td>
+                                <td>{{item.AllCountContract}}</td>
+                                <td>{{item.CountSubGroupBudget}}</td>
+                                <td>{{item.CountSubGroupContract}}</td>
+                                <td>{{item.EducationType}}</td>
+                                <td>{{item.EducationForm}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">Підгрупи</div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Назва</th>
+                                    <th>Кіл-сть студ.</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in subGroupList">
+                                <td>{{item.Id}}</td>
+                                <td>{{item.Name}}</td>
+                                <td>{{item.CountStudent}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

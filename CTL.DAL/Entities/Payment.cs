@@ -9,9 +9,10 @@ namespace CTL.DAL.Entities
             this.PaymentForYearses = new HashSet<PaymentForYears>();
         }
         public int Id { get; set; }
-        public Appointment Appointment { get; set; }
         public string AppointmentSub { get; set; }
         public int Salary { get; set; }
+
+        public virtual Appointment Appointment { get; set; }
 
         public virtual ICollection<PaymentForYears> PaymentForYearses { get; set; }
     }

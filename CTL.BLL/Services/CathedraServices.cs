@@ -26,12 +26,12 @@ namespace CTL.BLL.Services
                 {
                     throw new ValidationException("Відсутні дані для створення запису в таблиці " + _nameTable, "");
                 }
+
                 var faculty = Database.Faculties.Get(item.FacultyId);
 
                 if (faculty == null)
                 {
                     throw new ValidationException("Відсутні дані про факультет ", "");
-
                 }
 
                 Cathedra cathedra = new Cathedra { Name = item.Name, FullName = item.FullName, Faculty = faculty  };
@@ -131,7 +131,13 @@ namespace CTL.BLL.Services
                 {
                     throw new ValidationException("Дані про запис з таблиці" + _nameTable + " не знайдено!", "");
                 }
+
                 var faculty = Database.Faculties.Get(item.FacultyId);
+
+                if (faculty == null)
+                {
+                    throw new ValidationException("Відсутні дані про факультет", "");
+                }
 
                 cathedra.Name = item.Name;
                 cathedra.FullName = item.FullName;
@@ -144,8 +150,7 @@ namespace CTL.BLL.Services
             catch (Exception)
             {
                 throw new ValidationException("Помилка оновлення запису в таблиці " + _nameTable, "");
-            }
-            
+            }      
         }
     }
 }

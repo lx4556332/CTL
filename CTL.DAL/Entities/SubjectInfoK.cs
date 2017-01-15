@@ -14,7 +14,7 @@
         public double RgrK { get; set; }
         public double DkrK { get; set; }
         public double SummeryK { get; set; }
-        public double СonsultationK { get; set; }
+        public double ConsultationK { get; set; }
         public double TotalHoursK { get; set; }
     }
 }

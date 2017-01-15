@@ -11,13 +11,14 @@ namespace CTL.WEB.Areas.Admin.Controllers
     public class InputDataFacultyController : Controller
     {
         private IUoWBLL dataServices;
+
         public InputDataFacultyController(IUoWBLL data)
         {
             dataServices = data;
         }
 
         // Список Факультетів
-        // GET: Admin/InputData
+        // GET: Admin/InputDataFaculty
         public ActionResult Index()
         {
             try

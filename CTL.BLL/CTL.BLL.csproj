@@ -62,8 +62,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\AppointmentDTO.cs" />
     <Compile Include="DTO\CathedraDTO.cs" />
+    <Compile Include="DTO\DegreeDTO.cs" />
     <Compile Include="DTO\FacultyDTO.cs" />
+    <Compile Include="DTO\FlowDTO.cs" />
+    <Compile Include="DTO\GroupDTO.cs" />
+    <Compile Include="DTO\OtherTypeDTO.cs" />
+    <Compile Include="DTO\PaymentDTO.cs" />
+    <Compile Include="DTO\PaymentForYearsDTO.cs" />
+    <Compile Include="DTO\QualificationLevelDTO.cs" />
+    <Compile Include="DTO\RankDTO.cs" />
+    <Compile Include="DTO\SubGroupDTO.cs" />
+    <Compile Include="DTO\SubjectDTO.cs" />
+    <Compile Include="DTO\SubjectInfoBDTO.cs" />
+    <Compile Include="DTO\SubjectInfoKDTO.cs" />
+    <Compile Include="DTO\SubTypeWorkDTO.cs" />
+    <Compile Include="DTO\TeacherInfoDTO.cs" />
+    <Compile Include="DTO\TeacherLoadDTO.cs" />
+    <Compile Include="DTO\TeacherLoadOtherTypeDTO.cs" />
+    <Compile Include="DTO\TypeWorkDTO.cs" />
+    <Compile Include="DTO\YearsCountDTO.cs" />
     <Compile Include="Infrastructure\ValidationException.cs" />
     <Compile Include="Interfaces\IServices.cs" />
     <Compile Include="Interfaces\IUoWBLL.cs" />
@@ -72,7 +91,19 @@
     <Compile Include="Services\CathedraServices.cs" />
     <Compile Include="Services\DegreeServices.cs" />
     <Compile Include="Services\FacultyServices.cs" />
+    <Compile Include="Services\FlowServices.cs" />
+    <Compile Include="Services\GroupServices.cs" />
+    <Compile Include="Services\QualificationLevelServices.cs" />
+    <Compile Include="Services\RankServices.cs" />
+    <Compile Include="Services\SubGroupServices.cs" />
+    <Compile Include="Services\SubjectInfoBServices.cs" />
+    <Compile Include="Services\SubjectInfoKServices.cs" />
+    <Compile Include="Services\SubjectServices.cs" />
+    <Compile Include="Services\SubTypeWorkServices.cs" />
+    <Compile Include="Services\TeacherInfoServices.cs" />
+    <Compile Include="Services\TypeWorkServices.cs" />
     <Compile Include="Services\UoWBLL.cs" />
+    <Compile Include="Services\YearsCountServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CTL.DAL\CTL.DAL.csproj">

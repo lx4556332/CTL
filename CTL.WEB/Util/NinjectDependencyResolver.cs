@@ -1,31 +1,20 @@
-﻿using CTL.BLL.Interfaces;
-using CTL.BLL.Services;
-using Ninject;
-using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using Ninject;
+using System.Web.Http.Dependencies;
 
 namespace CTL.WEB.Util
 {
-    public class NinjectDependencyResolver : IDependencyResolver
+    public class NinjectDependencyResolver : NinjectDependencyScope, IDependencyResolver
     {
-        private IKernel kernel;
-        public NinjectDependencyResolver(IKernel kernelParam)
+        IKernel kernel;
+
+        public NinjectDependencyResolver(IKernel kernel) : base(kernel)
         {
-            kernel = kernelParam;
-            AddBindings();
+            this.kernel = kernel;
         }
-        public object GetService(Type serviceType)
+
+        public IDependencyScope BeginScope()
         {
-            return kernel.TryGet(serviceType);
-        }
-        public IEnumerable<object> GetServices(Type serviceType)
-        {
-            return kernel.GetAll(serviceType);
-        }
-        private void AddBindings()
-        {
-            kernel.Bind<IUoWBLL>().To<UoWBLL>().WithConstructorArgument("DatabaseConnection");
+            return new NinjectDependencyScope(kernel.BeginBlock());
         }
     }
 }

@@ -11,9 +11,12 @@ namespace CTL.WEB.Areas.Admin.Controllers
     public class InputDataCathedraController : Controller
     {
         private IUoWBLL dataServices;
+        DropDownListData dropDownListData;
+   
         public InputDataCathedraController(IUoWBLL data)
         {
             dataServices = data;
+            dropDownListData = new DropDownListData(data);
         }
 
         //Список кафедр
@@ -45,9 +48,9 @@ namespace CTL.WEB.Areas.Admin.Controllers
         {
             try
             {
-                var model = GetFacultys(new CathedraViewModel());
+                ViewBag.FacultyList = dropDownListData.GetFacultyList(0);
 
-                return View(model);
+                return View();
             }
             catch (ValidationException ex)
             {
@@ -59,13 +62,13 @@ namespace CTL.WEB.Areas.Admin.Controllers
         // POST: Admin/CreateCathedra
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateCathedra(CreateCathedraViewModel model)
+        public ActionResult CreateCathedra(CathedraViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {                   
-                    var cathedraDTO = new CathedraDTO { Name = model.Cathedra.Name, FullName = model.Cathedra.FullName, FacultyId = model.Cathedra.FacultyId };
+                    var cathedraDTO = new CathedraDTO { Name = model.Name, FullName = model.FullName, FacultyId = model.FacultyId };
                     dataServices.Cathedras.Create(cathedraDTO);
                 }
                 
@@ -76,9 +79,9 @@ namespace CTL.WEB.Areas.Admin.Controllers
                 ModelState.AddModelError(ex.Message, ex.Property);
             }
 
-            var oldModel = GetFacultys(model.Cathedra);
+            ViewBag.FacultyList = dropDownListData.GetFacultyList(model.FacultyId);
 
-            return View(oldModel);
+            return View(model);
         }
 
         //Редагування кафедри
@@ -99,11 +102,11 @@ namespace CTL.WEB.Areas.Admin.Controllers
                         cathedraViewModel.FacultyId = cathedra.FacultyId;
                         cathedraViewModel.FacultyName = cathedra.FacultyName;
                     }
-                }
-            
-                var model = GetFacultys(cathedraViewModel);
 
-                return View(model);
+                    ViewBag.FacultyList = dropDownListData.GetFacultyList(cathedra.FacultyId);
+                }
+
+                return View(cathedraViewModel);
             }
             catch (ValidationException ex)
             {
@@ -115,20 +118,20 @@ namespace CTL.WEB.Areas.Admin.Controllers
         // POST: Admin/EditCathedra
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditCathedra(CreateCathedraViewModel model)
+        public ActionResult EditCathedra(CathedraViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    CathedraDTO cathedraDTO = new CathedraDTO { Id = model.Cathedra.Id, Name = model.Cathedra.Name, FullName = model.Cathedra.FullName, FacultyId = model.Cathedra.FacultyId };
+                    CathedraDTO cathedraDTO = new CathedraDTO { Id = model.Id, Name = model.Name, FullName = model.FullName, FacultyId = model.FacultyId };
                     dataServices.Cathedras.Update(cathedraDTO);
                 }
                 else
                 {
-                    var oldModel = GetFacultys(model.Cathedra);
+                    ViewBag.FacultyList = dropDownListData.GetFacultyList(model.FacultyId);
 
-                    return View(oldModel);
+                    return View(model);
                 }
             }
             catch (ValidationException ex)
@@ -193,24 +196,6 @@ namespace CTL.WEB.Areas.Admin.Controllers
         {
             dataServices.Dispose();
             base.Dispose(disposing);
-        }
-
-        private CreateCathedraViewModel GetFacultys(CathedraViewModel cathedra)
-        {
-            IEnumerable<FacultyDTO> facultyDTO = dataServices.Faculties.ReadAll();
-
-            List<SelectListItem> facultyList = new List<SelectListItem>();
-
-            foreach (var item in facultyDTO)
-            {
-                facultyList.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.Name });
-            }
-
-            CreateCathedraViewModel model = new CreateCathedraViewModel();
-            model.Cathedra = cathedra;
-            model.FacultyListItem = facultyList;
-
-            return model;
         }
     }
 }

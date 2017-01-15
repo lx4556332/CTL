@@ -28,7 +28,7 @@ namespace CTL.BLL.Services
                     throw new ValidationException("Відсутні дані для створення запису в таблиці " + _nameTable, "");
                 }
 
-                Degree degree = new Degree { Name = item.Name };
+                Degree degree = new Degree { Name = item.Name, FullName = item.FullName };
 
                 Database.Degrees.Create(degree);
                 Database.Save();
@@ -73,7 +73,7 @@ namespace CTL.BLL.Services
                     throw new ValidationException("Дані про запис з таблиці" + _nameTable + " не знайдено!", "");
                 }
 
-                DegreeDTO degreeDTO = new DegreeDTO { Id = degree.Id, Name = degree.Name };
+                DegreeDTO degreeDTO = new DegreeDTO { Id = degree.Id, Name = degree.Name, FullName = degree.FullName };
 
                 return degreeDTO;
             }
@@ -98,7 +98,7 @@ namespace CTL.BLL.Services
 
                 foreach (var item in degrees)
                 {
-                    degreeDTOs.Add(new DegreeDTO { Id = item.Id, Name = item.Name });
+                    degreeDTOs.Add(new DegreeDTO { Id = item.Id, Name = item.Name, FullName = item.FullName });
                 }
 
                 return degreeDTOs;
@@ -126,6 +126,7 @@ namespace CTL.BLL.Services
                 }
 
                 degree.Name = item.Name;
+                degree.FullName = item.FullName;
 
                 Database.Degrees.Update(degree);
                 Database.Save();

@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Web.Mvc;
 using System.Web.Optimization;
+using System.Web.Http;
 using System.Web.Routing;
 
 namespace CTL.WEB
@@ -12,6 +13,7 @@ namespace CTL.WEB
         {
             Database.SetInitializer<ApplicationDbContext>(new AppDbInitializer());
 
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

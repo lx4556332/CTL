@@ -1,0 +1,45 @@
+﻿@model IEnumerable<CTL.WEB.Areas.Admin.Models.SubTypeWorkViewModel>
+@{
+    ViewBag.Title = "Під вид робіт";
+}
+
+<h2>@ViewBag.Title</h2>
+<h4>Список під видів робіт <span class="badge">@Model.Count()</span></h4>
+<hr />
+@Html.ActionLink("На головну", "Index", new { area = "Admin", controller = "Home" }, new { @class = "btn btn-default", role = "button" })
+@Html.ActionLink("Створити", "CreateSubTypeWork", new { area = "Admin", controller = "InputDataSubTypeWork" }, new { @class = "btn btn-primary", role = "button" })
+<hr />
+
+<div class="table-responsive">
+    <table class="table table-hover table-bordered table-condensed">
+        <tr>
+            <th>#</th>
+            <th>Під вид робіт</th>
+            <th></th>
+        </tr>
+
+        @if (Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>
+                        @Html.ActionLink("Редагувати", "EditSubTypeWork", new { id = item.Id }, new { @class = "btn btn-info btn-xs btn-block", role = "button" })
+                        @Html.ActionLink("Видалити", "DeleteSubTypeWork", new { id = item.Id }, new { @class = "btn btn-danger btn-xs btn-block", role = "button" })
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td> - </td>
+                <td> - </td>
+                <td> - </td>
+            </tr>
+        }
+
+    </table>
+</div>

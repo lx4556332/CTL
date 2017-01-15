@@ -1,4 +1,4 @@
-﻿@model CTL.WEB.Areas.Admin.Models.CreateCathedraViewModel
+﻿@model CTL.WEB.Areas.Admin.Models.CathedraViewModel
 
 @{
     ViewBag.Title = "Кафедра";
@@ -16,32 +16,32 @@
 
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
-    @Html.Hidden("Cathedra.Id", Model.Cathedra.Id)
+    @Html.Hidden("Id", Model.Id)
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Cathedra.Name, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Cathedra.Name, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Cathedra.FullName, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.FullName, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Cathedra.FullName, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Cathedra.FacultyName, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.FacultyName, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.Cathedra.FacultyId, Model.FacultyListItem, new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.FacultyId, ViewBag.FacultyList as IEnumerable<SelectListItem>, new { @class = "form-control" })
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Редагувати" />
+            <input type="submit" class="btn btn-success" value="Редагувати" />
         </div>
     </div>
 }

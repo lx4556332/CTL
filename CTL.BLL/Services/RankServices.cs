@@ -28,7 +28,7 @@ namespace CTL.BLL.Services
                     throw new ValidationException("Відсутні дані для створення запису в таблиці " + _nameTable, "");
                 }
 
-                Rank rank = new Rank { Name = item.Name };
+                Rank rank = new Rank { Name = item.Name, FullName = item.FullName };
 
                 Database.Ranks.Create(rank);
                 Database.Save();
@@ -73,7 +73,7 @@ namespace CTL.BLL.Services
                     throw new ValidationException("Дані про запис з таблиці" + _nameTable + " не знайдено!", "");
                 }
 
-                RankDTO rankDTO = new RankDTO { Id = rank.Id, Name = rank.Name };
+                RankDTO rankDTO = new RankDTO { Id = rank.Id, Name = rank.Name, FullName = rank.FullName };
 
                 return rankDTO;
             }
@@ -98,7 +98,7 @@ namespace CTL.BLL.Services
 
                 foreach (var item in ranks)
                 {
-                    rankDTOs.Add(new RankDTO { Id = item.Id, Name = item.Name });
+                    rankDTOs.Add(new RankDTO { Id = item.Id, Name = item.Name, FullName = item.FullName });
                 }
 
                 return rankDTOs;
@@ -126,6 +126,7 @@ namespace CTL.BLL.Services
                 }
 
                 rank.Name = item.Name;
+                rank.FullName = item.FullName;
 
                 Database.Ranks.Update(rank);
                 Database.Save();

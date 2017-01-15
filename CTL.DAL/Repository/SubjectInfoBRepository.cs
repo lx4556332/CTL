@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using CTL.DAL.Entities;
 using CTL.DAL.Interfaces;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
 
 namespace CTL.DAL.Repository

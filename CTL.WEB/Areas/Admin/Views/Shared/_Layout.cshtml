@@ -28,15 +28,29 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Введення<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Дані про Факультет", "Index", "InputDataFaculty")</li>
-                                <li>@Html.ActionLink("Дані про Кафедру", "Index", "InputDataCathedra")</li>                   
+                                <li>@Html.ActionLink("Факультет", "Index", "InputDataFaculty")</li>
+                                <li>@Html.ActionLink("Кафедра", "Index", "InputDataCathedra")</li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("Група", "Index", "InputDataGroup")</li>   
+                                <li>@Html.ActionLink("Потік", "Index", "InputDataFlow")</li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("Дисципліна", "Index", "InputDataSubject")</li>
+                                <li>@Html.ActionLink("Викладачі", "Index", "InputDataTeacherInfo")</li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("Вид робіт", "Index", "InputDataTypeWork")</li>
+                                <li>@Html.ActionLink("Під вид робіт", "Index", "InputDataSubTypeWork")</li>
+                                <li>@Html.ActionLink("Посада", "Index", "InputDataAppointment")</li>
+                                <li>@Html.ActionLink("Ступінь", "Index", "InputDataDegree")</li>
+                                <li>@Html.ActionLink("Звання", "Index", "InputDataRank")</li>
+                                <li>@Html.ActionLink("ОКР", "Index", "InputDataQualificationLevel")</li>
+                                <li>@Html.ActionLink("Кількість років", "Index", "InputDataYearsCount")</li>
                             </ul>
                         </li>
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Розрахунок<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Розрахунок навантаження", "Index", "Calculation")</li>
+                                <li>@Html.ActionLink("Дисципліна", "Index", "CalcSubjectLoad")</li>
                             </ul>
                         </li>
                        
@@ -68,6 +82,10 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/angularJS")
+    @Scripts.Render("~/bundles/InputData")
+    @Scripts.Render("~/bundles/Calc")
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

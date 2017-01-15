@@ -27,7 +27,7 @@ namespace CTL.BLL.Services
                     throw new ValidationException("Відсутні дані для створення запису в таблиці " + _nameTable, "");
                 }
 
-                Appointment appointment = new Appointment { Name = item.Name };
+                Appointment appointment = new Appointment { Name = item.Name, FullName = item.FullName };
 
                 Database.Appointments.Create(appointment);
                 Database.Save();
@@ -72,7 +72,7 @@ namespace CTL.BLL.Services
                     throw new ValidationException("Дані про посаду не знайдено!", "");
                 }
 
-                AppointmentDTO appointmentDTO = new AppointmentDTO { Id = appointment.Id, Name = appointment.Name };
+                AppointmentDTO appointmentDTO = new AppointmentDTO { Id = appointment.Id, Name = appointment.Name, FullName = appointment.FullName };
 
                 return appointmentDTO;
             }
@@ -97,7 +97,7 @@ namespace CTL.BLL.Services
 
                 foreach (var item in appointment)
                 {
-                    appointmentDTOs.Add(new AppointmentDTO { Id = item.Id, Name = item.Name });
+                    appointmentDTOs.Add(new AppointmentDTO { Id = item.Id, Name = item.Name, FullName = item.FullName });
                 }
 
                 return appointmentDTOs;
@@ -125,6 +125,7 @@ namespace CTL.BLL.Services
                 }
 
                 appointment.Name = item.Name;
+                appointment.FullName = item.FullName;
 
                 Database.Appointments.Update(appointment);
                 Database.Save();

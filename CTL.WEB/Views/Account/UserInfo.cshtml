@@ -5,39 +5,41 @@
 
 <h2>Користувачі</h2>
 <hr />
-@Html.ActionLink("Створити новий запис", "Register", null, new { @class="btn btn-default", role="button"})
+@Html.ActionLink("Створити", "Register", null, new { @class="btn btn-default", role="button"})
 <hr />
-<table class="table table-striped">
-<tr>
-    <th>Пошта</th>
-    <th>Ролі</th>
-    <th></th>
-    <th></th>
-</tr>
 
-@foreach (var item in Model)
-{
-    <tr>
-        <td>@item.Email</td>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <th>Пошта</th>
+            <th>Ролі</th>
+            <th></th>
+            <th></th>
+        </tr>
 
-        @if (item.Role.Count != 0)
+        @foreach (var item in Model)
         {
-            foreach (var role in item.Role)
-            {
-                <td>@role</td>
-            }
+            <tr>
+                <td>@item.Email</td>
+
+                @if (item.Role.Count != 0)
+                {
+                    foreach (var role in item.Role)
+                    {
+                        <td>@role</td>
+                    }
+                }
+                else
+                {
+                    <td> - </td>
+                }
+
+
+                <td>
+                    @Html.ActionLink("Редагувати", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Видалити", "Delete", new { id = item.Id, item.Email })
+                </td>
+            </tr>
         }
-        else
-        {
-            <td> - </td>
-        }
-
-
-        <td>
-            @Html.ActionLink("Редагувати", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Видалити", "Delete", new { id = item.Id, item.Email })
-        </td>
-    </tr>
-}
-</table>
-
+    </table>
+</div>

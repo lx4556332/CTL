@@ -1,0 +1,206 @@
+﻿@{
+    ViewBag.Title = "Потік";
+}
+
+<h2>@ViewBag.Title</h2>
+<h4>Редагувати дані про потік</h4>
+<hr />
+@Html.ActionLink("Повернутися", "Index", new { area = "Admin", controller = "InputDataFlow" }, new { @class = "btn btn-default", role = "button" })
+<hr />
+
+<div ng-app="editFlow">
+    <div ng-controller="flowDataCtrl">
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label for="Name">Назва потоку</label>
+                                <input type="text" id="Name" name="Name" class="form-control" ng-model="flow.Name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="AllCountBudget">Бюджет</label>
+                                <input type="number" id="AllCountBudget" name="AllCountBudget" class="form-control" ng-model="flow.AllCountBudget" />
+                            </div>
+                            <div class="form-group">
+                                <label for="AllCountContract">Контракт</label>
+                                <input type="number" id="AllCountContract" name="AllCountContract" class="form-control" ng-model="flow.AllCountContract" />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-success" ng-click="httpPostFlow()" value="Зберегти" />
+                            </div>
+                        </div>
+
+                        <div class="col-xs-7">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="CountSubGroupBudget">Кіл-сть підгруп Б</label>
+                                    <input type="number" id="CountSubGroupBudget" name="CountSubGroupBudget" class="form-control" ng-model="flow.CountSubGroupBudget" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="CountSubGroupContract">Кіл-сть підгруп К</label>
+                                    <input type="number" id="CountSubGroupContract" name="CountSubGroupContract" class="form-control" ng-model="flow.CountSubGroupContract" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="StudentsCountTotal">Загалом</label>
+                                    <input type="number" id="StudentsCountTotal" name="StudentsCountTotal" class="form-control" ng-model="flow.StudentsCountTotal" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="EduType">Тип навчання</label>
+                                    <select class="form-control" ng-model="flow.EducationType" ng-options="type for type in edu.types"></select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="CountStudSubGroupBudget">Кіл-сть студ. Б</label>
+                                    <input type="number" id="CountStudSubGroupBudget" name="CountStudSubGroupBudget" class="form-control" ng-model="flow.CountStudSubGroupBudget" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="CountStudSubGroupContract">Кіл-сть студ. К</label>
+                                    <input type="number" id="CountStudSubGroupContract" name="CountStudSubGroupContract" class="form-control" ng-model="flow.CountStudSubGroupContract" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="res">Залишок</label>
+                                    <input type="number" id="res" class="form-control" ng-model="residual" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="EduForm">Форма навчання</label>
+                                    <select class="form-control" ng-model="flow.EducationForm" ng-options="form for form in edu.forms"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="Name">Назва підгрупи</label>
+                            <input type="text" id="Name" class="form-control" ng-model="currentItem.Name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="CountStudent">Кіл-сть студ.</label>
+                            <input type="number" id="CountStudent" class="form-control" ng-model="currentItem.CountStudent" />
+                        </div>
+                        <button class="btn btn-sm btn-primary" ng-click="httpPutSubGroup(currentItem)">Зберегти</button>
+                        <button class="btn btn-sm btn-default" ng-click="cancelEditSubGroup()">Скасувати</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-success">
+                    <div class="panel-heading">Список обраних груп для розподілу на підгрупи</div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Назва групи</th>
+                                    <th>Бюджет</th>
+                                    <th>Контракт</th>
+                                    <th>Заг. студ.</th>
+                                    <th>Видалити</th>
+                                    <th>Розділити</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in flow.selectedGroupList">
+                                <td>{{item.Id}}</td>
+                                <td>{{item.Name}}</td>
+                                <td>{{item.StudentsCountBudget}}</td>
+                                <td>{{item.StudentsCountContract}}</td>
+                                <td>{{item.StudentsCountTotal}}</td>
+                                <td><input type="checkbox" ng-model="item.Selected" ng-change="addRemoveGroup(item)" /></td>
+                                <td><input type="checkbox" ng-model="item.divideGroup" /></td>
+                                <td><button class="btn btn-xs btn-primary" ng-click="dividedGroup(item)">Розподілити</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="panel panel-success">
+                    <div class="panel-heading">Список підгруп</div>
+                    <div class="panel-body">
+                        <button class="btn btn-xs btn-primary" ng-click="httpGetSubGroup()">Оновити список</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Назва</th>
+                                    <th>Кіл-сть студ.</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="item in flow.subGroupList">
+                                <td ng-cloak>{{item.Id}}</td>
+                                <td ng-cloak>{{item.Name}}</td>
+                                <td ng-cloak>{{item.CountStudent}}</td>
+                                <td>
+                                    <button class="btn btn-xs btn-info btn-block" ng-click="editSubGroup(item)">Редагувати</button>
+                                    <button class="btn btn-xs btn-danger btn-block" ng-click="httpDeleteSubGroup(item)">Видалити</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Список груп</div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Назва групи</th>
+                                    <th>Бюджет</th>
+                                    <th>Контракт</th>
+                                    <th>Заг. студ.</th>
+                                    <th>Форма навч.</th>
+                                    <th>Тип навч.</th>
+                                    <th>Курс</th>
+                                    <th>ОКР</th>
+                                    <th>Кафедра</th>
+                                    <th>Обрати</th>
+                                </tr>
+                            </thead>
+
+                            <tr ng-repeat="item in groupList">
+                                <td>{{item.Id}}</td>
+                                <td>{{item.Name}}</td>
+                                <td>{{item.StudentsCountBudget}}</td>
+                                <td>{{item.StudentsCountContract}}</td>
+                                <td>{{item.StudentsCountTotal}}</td>
+                                <td>{{item.EducationForm}}</td>
+                                <td>{{item.EducationType}}</td>
+                                <td>{{item.Course}}</td>
+                                <td>{{item.QualificationLevelName}}</td>
+                                <td>{{item.CathedraName}}</td>
+                                <td><input type="checkbox" ng-model="item.Selected" ng-change="addRemoveGroup(item)" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

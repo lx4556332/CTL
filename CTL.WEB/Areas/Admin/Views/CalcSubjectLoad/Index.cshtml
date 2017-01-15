@@ -1,0 +1,128 @@
+﻿@model IEnumerable<CTL.WEB.Areas.Admin.Models.SubjectDataViewModel>
+@{
+    ViewBag.Title = "Дисципліни";
+}
+
+<h2>@ViewBag.Title</h2>
+<h4>Список дисциплін з навантаженням <span class="badge">@Model.Count()</span></h4>
+<hr />
+@Html.ActionLink("На головну", "Index", new { area = "Admin", controller = "Home" }, new { @class = "btn btn-default", role = "button" })
+<hr />
+<div class="panel panel-default">
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th align="center">Дисципліна</th>
+                    <th>Сем.</th>
+                    <th></th>
+                    <th>#</th>
+                    <th>Лек.</th>
+                    <th>Пр.</th>
+                    <th>Лаб.</th>
+                    <th>Екзам.</th>
+                    <th>Заліки</th>
+                    <th>Контр. Роб.</th>
+                    <th>Курс. Пр.</th>
+                    <th>Курс. Роб.</th>
+                    <th>РГР</th>
+                    <th>ДКР</th>
+                    <th>Реф.</th>
+                    <th>Конс.</th>
+                    <th>Заг.</th>
+                    <th></th>
+                </tr>
+            </thead>
+            @if (Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <td rowspan="2" align="center">@item.Name</td>
+                            <td rowspan="2" align="center">@item.Semestr</td>
+                            <td><b>Б</b></td>
+                            <td>@item.SubjectInfoBId</td>
+                            <td>@item.LectionB</td>
+                            <td>@item.PracticeB</td>
+                            <td>@item.LabB</td>
+                            <td>@item.ExamB</td>
+                            <td>@item.CreditB</td>
+                            <td>@item.TestB</td>
+                            <td>@item.CourseProjectB</td>
+                            <td>@item.CourseWorkB</td>
+                            <td>@item.RgrB</td>
+                            <td>@item.DkrB</td>
+                            <td>@item.SummeryB</td>
+                            <td>@item.ConsultationB</td>
+                            <td>@item.TotalHoursB</td>
+                            <td rowspan="2">
+                                @Html.ActionLink("Розрахувати", "CreateSubjectLoad", new { id = item.SubjectId }, new { @class = "btn btn-primary btn-xs btn-block", role = "button" })
+                                @Html.ActionLink("Видалити", "DeleteSubjectLoad", new { id = item.SubjectId }, new { @class = "btn btn-danger btn-xs btn-block", role = "button" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><b>К</b></td>
+                            <td>@item.SubjectInfoKId</td>
+                            <td>@item.LectionK</td>
+                            <td>@item.PracticeK</td>
+                            <td>@item.LabK</td>
+                            <td>@item.ExamK</td>
+                            <td>@item.CreditK</td>
+                            <td>@item.TestK</td>
+                            <td>@item.CourseProjectK</td>
+                            <td>@item.CourseWorkK</td>
+                            <td>@item.RgrK</td>
+                            <td>@item.DkrK</td>
+                            <td>@item.SummeryK</td>
+                            <td>@item.ConsultationK</td>
+                            <td>@item.TotalHoursK</td>
+                        </tr>
+                    </tbody>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td rowspan="2" align="center">-</td>
+                    <td rowspan="2" align="center">-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td rowspan="2">-</td>
+                </tr>
+
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+            }
+        </table>
+    </div>
+</div>

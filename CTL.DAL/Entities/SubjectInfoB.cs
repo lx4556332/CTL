@@ -15,7 +15,7 @@ namespace CTL.DAL.Entities
         public double RgrB { get; set; }
         public double DkrB { get; set; }
         public double SummeryB { get; set; }
-        public double СonsultationB { get; set; }
+        public double ConsultationB { get; set; }
         public double TotalHoursB { get; set; }
     }
 }

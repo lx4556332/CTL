@@ -30,6 +30,7 @@
         public double TotalHoursB { get; set; }
         public double TotalHoursK { get; set; }
         public double TotalHourse { get; set; }
+
         public virtual SubGroup SubGroup { get; set; }
         public virtual Subject Subject { get; set; }
         public virtual TeacherInfo TeacherInfo { get; set; }

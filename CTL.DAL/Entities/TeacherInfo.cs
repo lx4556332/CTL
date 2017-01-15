@@ -14,11 +14,11 @@ namespace CTL.DAL.Entities
         public string Name { get; set; }
         public string MiddleName { get; set; }
         public string Initials { get; set; }
-        public Rank Rank { get; set; }
-        public Appointment Appointment { get; set; }
-        public Degree Degree { get; set; }
         public int Allowance { get; set; }
 
+        public virtual Rank Rank { get; set; }
+        public virtual Appointment Appointment { get; set; }
+        public virtual Degree Degree { get; set; }
         public virtual Cathedra Cathedra { get; set; }
 
         public virtual ICollection<TeacherLoad> TeacherLoad { get; set; }

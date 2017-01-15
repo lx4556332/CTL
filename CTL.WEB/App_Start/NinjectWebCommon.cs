@@ -10,6 +10,10 @@ namespace CTL.WEB.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
+    using Util;
+    using System.Web.Http;
+    using BLL.Interfaces;
+    using BLL.Services;
 
     public static class NinjectWebCommon 
     {
@@ -46,6 +50,9 @@ namespace CTL.WEB.App_Start
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
                 RegisterServices(kernel);
+
+                GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
+
                 return kernel;
             }
             catch
@@ -61,7 +68,7 @@ namespace CTL.WEB.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            System.Web.Mvc.DependencyResolver.SetResolver(new Util.NinjectDependencyResolver(kernel));
+            kernel.Bind<IUoWBLL>().To<UoWBLL>().WithConstructorArgument("DatabaseConnection");
         }        
     }
 }

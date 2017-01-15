@@ -1,0 +1,36 @@
+﻿@model CTL.WEB.Areas.Admin.Models.QualificationLevelViewModel
+@{
+    ViewBag.Title = "Освітньо-кваліфікаційний рівень";
+}
+
+<h2>@ViewBag.Title</h2>
+<h4>Редагувати дані про освітньо-кваліфікаційний рівень</h4>
+<hr />
+@Html.ActionLink("Повернутися", "Index", new { area = "Admin", controller = "InputDataQualificationLevel" }, new { @class = "btn btn-default", role = "button" })
+<hr />
+
+@using (Html.BeginForm("EditQualificationLevel", "InputDataQualificationLevel", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    @Html.Hidden("Id", Model.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-success" value="Редагувати" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
